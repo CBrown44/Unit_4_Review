@@ -7,8 +7,8 @@
       Review Assignment
 
       Hitori Interactive Puzzle
-      Author: 
-      Date:   
+      Author: Caleb Brown
+      Date: 3/9/20  
 
       Filename:   jpf_hitori.html
 
@@ -19,7 +19,9 @@
    <title>The Hitori Puzzle</title>
    <link href="jpf_reset.css" rel="stylesheet" />
    <link href="jpf_styles.css" rel="stylesheet" />
- 
+   <link href="jpf_hitori.css" rel="stylesheet" />
+   <script src="jpf_grids3.js" async></script>
+   <script src="jpf_hitori.js" async></script>
 </head>
 
 <body>
@@ -80,23 +82,23 @@
             <li>The same number cannot be circled more than once
                in any row or column.</li>
             <li>Circles must form a single path connected
-                horizontally and vertically, but not diagonally.</li>
+               horizontally and vertically, but not diagonally.</li>
          </ol>
       </p>
       <h2>Tips</h2>
       <p>
          <ol>
             <li>When a block is found, surround it with circles horizontally
-                and vertically.
+               and vertically.
             </li>
             <li>When a number is circled, mark all duplicate numbers in that row
-                and column as blocks.
+               and column as blocks.
             </li>
             <li>Any cell between duplicate numbers (horizontally or
-                vertically) is always circled.
+               vertically) is always circled.
             </li>
             <li>No circled number or group of circled numbers 
-                can be entirely surrounded by blocks.
+               can be entirely surrounded by blocks.
             </li>
          </ol>
       </p>      

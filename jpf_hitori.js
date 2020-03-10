@@ -5,8 +5,8 @@
    Tutorial 11
    Review Assignment
 
-   Author: 
-   Date:   
+   Author: Caleb Brown
+   Date: 3/9/20  
 
    Global Variables
    ================
@@ -35,7 +35,7 @@
       
    showSolution()
       Shows the solution to the Hitori puzzle
-    
+   
    checkSolution()
       Checks the current user's puzzle to verify whether it contains
       the complete and correct solution.
@@ -47,6 +47,46 @@
 	
 */
 
+var allCells;
+window.onload = startUp;
+
+function startUp(){
+   document.getElementById("puzzleTitle").innerHTML = "Puzzle1";
+   document.getElementById("puzzle").innerHTML = drawHitori(hitori1Number, hotori1Blocks, hitori1Rating);
+
+   var puzzleButtons = document.getElementsByClassName("puzzles");
+   for(var i = 0; i < puzzleButtons.length; i++){
+      puzzleButtons[i].onclick = swapPuzzle;
+   }
+
+   setupPuzzle();
+
+   document.addEventListener("click", findErrors);
+   document.addEventListener("click", showSolution);
+}
+
+function switchPuzzle(e){
+   if(confirm("YOU WILL LOSE ALL YOUR PROGRESS ARE YOU SURE YOU WANT TO CHANGE PUZZLES???")){
+   var puzzleID = e.target.id;
+   var puzzleTitle = e.target.value;
+
+   document.getElementById("puzzleTitle").innerHTML = puzzleTitle;
+
+   switch(puzzleID){
+      case "puzzle1":
+         document.getElementById("puzzle1").innerHTML = drawPuzzle(hitori1Number, hitori1Blocks, hitori1Rating);
+         break;
+      case  "puzzle2":
+         document.getElementById("puzzle2").innerHTML = drawPuzzle(hitori2Number, hitori2Blocks, hitori2Rating);
+         break;
+      case  "puzzle3":
+         document.getElementById("puzzle3").innerHTML = drawPuzzle(hitori3Number, hitori3Blocks, hitori3Rating);
+         break;
+   }
+   
+   setupPuzzle();
+   }
+}
 
 
 
@@ -73,7 +113,7 @@ function checkSolution() {
       /* A cell is incorrect if it is in the block class and is not black
          or in the circle class and is not white */
       if ( (cellClass == "blocks" && cellColor !== "black") || 
-           (cellClass == "circles" && cellColor !== "rgb(101, 101, 101)")) {
+         (cellClass == "circles" && cellColor !== "rgb(101, 101, 101)")) {
          solved = false;
          break;
       }
