@@ -52,35 +52,33 @@ window.onload = startUp;
 
 function startUp(){
    document.getElementById("puzzleTitle").innerHTML = "Puzzle1";
-   document.getElementById("puzzle").innerHTML = drawHitori(hitori1Number, hotori1Blocks, hitori1Rating);
+   document.getElementById("puzzle").innerHTML = drawHitori(hitori1Numbers, hitori1Blocks, hitori1Rating);
 
    var puzzleButtons = document.getElementsByClassName("puzzles");
    for(var i = 0; i < puzzleButtons.length; i++){
-      puzzleButtons[i].onclick = swapPuzzle;
+      puzzleButtons[i].onclick = switchPuzzle;
    }
 
    setupPuzzle();
 
-   document.addEventListener("click", findErrors);
-   document.addEventListener("click", showSolution);
+   document.getElementById("check").onclick = findErrors;
+   document.getElementById("solve").onclick = showSolution;
 }
 
 function switchPuzzle(e){
    if(confirm("YOU WILL LOSE ALL YOUR PROGRESS ARE YOU SURE YOU WANT TO CHANGE PUZZLES???")){
    var puzzleID = e.target.id;
-   var puzzleTitle = e.target.value;
-
-   document.getElementById("puzzleTitle").innerHTML = puzzleTitle;
+   document.getElementById("puzzleTitle").innerHTML= e.target.value;
 
    switch(puzzleID){
       case "puzzle1":
-         document.getElementById("puzzle1").innerHTML = drawPuzzle(hitori1Number, hitori1Blocks, hitori1Rating);
+         document.getElementById("puzzle").innerHTML = drawHitori(hitori1Numbers, hitori1Blocks, hitori1Rating);
          break;
       case  "puzzle2":
-         document.getElementById("puzzle2").innerHTML = drawPuzzle(hitori2Number, hitori2Blocks, hitori2Rating);
+         document.getElementById("puzzle").innerHTML = drawHitori(hitori2Numbers, hitori2Blocks, hitori2Rating);
          break;
       case  "puzzle3":
-         document.getElementById("puzzle3").innerHTML = drawPuzzle(hitori3Number, hitori3Blocks, hitori3Rating);
+         document.getElementById("puzzle").innerHTML = drawHitori(hitori3Numbers, hitori3Blocks, hitori3Rating);
          break;
    }
    
@@ -88,15 +86,68 @@ function switchPuzzle(e){
    }
 }
 
+function setupPuzzle(){
+   allCells = document.querySelectorAll("table#hitoriGrid td");
 
+   for(var i = 0; i < allCells.length; i++){
+      allCells[i].style.backgroundColor = "white";
+      allCells[i].style.color = "black";
+      allCells[i].style.borderRadius = "0%";
+      allCells[i].addEventListener("mousedown",
+         function(e){
+            if(e.shiftKey){
+               //Shift key
+               e.target.style.backgroundColor = "white";
+               e.target.style.color = "black";
+               e.target.style.borderRadius = "0";
+            }else if(e.altKey){
+               //Alt key
+               e.target.style.backgroundColor = "black";
+               e.target.style.color = "white";
+               e.target.style.borderRadius = "0";
+            }else{
+               //Any key ???
+               e.target.style.backgroundColor = "rgb(101, 101, 101)";
+               e.target.style.color = "white";
+               e.target.style.borderRadius = "50%";
+            }
 
+            e.preventDefault();
+         }
+      );
+      allCells[i].addEventListener("mouseover",
+         function(e){
+            //cursor styles
+            if(e.shiftKey){
+               e.target.style.cursor = "url(jpf_eraser.png), alias";
+            }else if(e.altKey){
+               e.target.style.cursor = "url(jpf_block.png), cell";
+            }else{
+               e.target.style.cursor = "url(jpf_circle.png), pointer";
+            } 
+         }
+      );
 
+      checkSolution();
+   }
+}
 
+function findErrors(){
+   for(var i = 0; i < allCells.length; i++){
+      if((allCells[i].className === "blocks" && allCells[i].style.backgroundColor === "rgb(101, 101, 101)") || (allCells[i].className === "circles" && allCells[i].style.backgroundColor === "black")){
+         allCells[i].style.color = "red";
+      }
+   }
+   setTimeout(
+      function(e){
+         for(var i = 0; i < allCells.length; i++){
+            if((allCells[i].className === "blocks" && allCells[i].style.backgroundColor === "rgb(101, 101, 101)") || (allCells[i].className === "circles" && allCells[i].style.backgroundColor === "black")){
+               allCells[i].style.color = "white";
+            }
+         }
+      }, 500);
+}
 
-
-
-
-         
 /* ================================================================= */
 
 function checkSolution() {
